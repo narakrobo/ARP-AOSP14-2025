@@ -1,0 +1,13 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 163929 Realtime: 163929
+
+Total RAM: 2,014,616K (status normal)
+ Free RAM:   597,645K (  252,761K cached pss +   226,804K cached kernel +   118,080K free)
+DMA-BUF:    30,412K (       52K mapped +    30,360K unmapped)
+DMA-BUF Heaps:        60K
+DMA-BUF Heaps pool:        24K
+      GPU:         0K (        0K dmabuf +         0K private)
+ Used RAM: 1,528,970K (1,187,230K used pss +   341,740K kernel)
+ Lost RAM:    -4,722K
+     ZRAM:    50,500K physical used for   163,584K in swap (1,510,956K total swap)
+   Tuning: 192 (large 512), oom   322,560K, restore limit   107,520K (high-end-gfx)
