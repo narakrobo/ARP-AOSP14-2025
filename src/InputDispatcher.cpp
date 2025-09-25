@@ -5316,6 +5316,18 @@ namespace android::inputdispatcher
       return;
     }
 
+    // ---- Timestamp: TOUCHPIPE - Layer 2
+    nsecs_t eid = args->eventTime;                     // kernel evdev timestamp(ns)
+    nsecs_t readNs = args->readTime;                   // when EventHub read the event (ns)
+    nsecs_t nowNs = systemTime(SYSTEM_TIME_MONOTONIC); // when Dispatcher received the event (ns)
+
+    double k2u_ms = (readNs - eid) / 1e6;        // kernel to userspace processing time
+    double evh2disp_ms = (nowNs - readNs) / 1e6; // EventHub -> Dispatcher processing time
+
+    ALOGI("TOUCHPIPE EVH2DISP eid=%" PRId64 " now=%" PRId64 " read=%" PRId64 " k2u_ms=%.3f evh2disp_ms=%.3f action=0x%x dev=%d",
+          (int64_t)eid, (int64_t)nowNs, (int64_t)readNs, k2u_ms, evh2disp_ms, args->action, args->deviceId);
+    // -----------------------------------------------------
+
     if (DEBUG_VERIFY_EVENTS)
     {
       auto [it, _] =
