@@ -2402,6 +2402,18 @@ namespace android
                   .code = iev.code,
                   .value = iev.value,
               });
+
+              // ---- Timestamp: TOUCHPIPE - Layer 1
+              if (iev.type == EV_SYN && iev.code == SYN_REPORT)
+              {
+                nsecs_t eid = event->when;                         // ts(ns) from kernel
+                nsecs_t nowNs = systemTime(SYSTEM_TIME_MONOTONIC); // ns userspace received time
+                double k2uMs = (nowNs - eid) / 1e6;                // kernel to userspace processing time
+
+                ALOGI("TOUCHPIPE K2U dev=%d eid=%" PRId64 " now=%" PRId64 " k2u_ms=%.3f",
+                      deviceId, (int64_t)eid, (int64_t)nowNs, k2uMs);
+              }
+              // -----------------------------------------------------
             }
             if (events.size() >= EVENT_BUFFER_SIZE)
             {
