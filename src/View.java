@@ -16573,6 +16573,22 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @see #onTouchEvent(MotionEvent)
      */
     public boolean dispatchTouchEvent(MotionEvent event) {
+        // ---- Timestamp: TOUCHPIPE - Layer 3 (pre)
+        final boolean __isRoot = (getRootView() == this);
+        final int __act = event.getActionMasked();
+        final boolean __logThis = __isRoot && (__act == MotionEvent.ACTION_DOWN);
+
+        final long __eid = event.getEventTimeNano();    // 공통 이벤트 ID(ns)
+        final long __t0  = SystemClock.uptimeNanos();   // 앱(View 트리) 진입 시각
+
+        if (__logThis) {
+            Log.i("TOUCHPIPE", "DISP2A_pre eid=" + __eid
+                    + " now=" + __t0
+                    + " src=0x" + Integer.toHexString(event.getSource())
+                    + " act=" + event.getActionMasked());
+        }
+        // -----------------------------------------------------
+
         // If the event should be handled by accessibility focus first.
         if (event.isTargetAccessibilityFocus()) {
             // We don't have focus or no virtual descendant has it, do not handle the event.
@@ -16610,6 +16626,18 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 (actionMasked == MotionEvent.ACTION_DOWN && !result)) {
             stopNestedScroll();
         }
+
+        // ---- Timestamp: TOUCHPIPE - Layer 3 (post)
+        if (__logThis) {
+            final long __t1 = SystemClock.uptimeNanos();
+            final double __appProcMs = (__t1 - __t0) / 1e6;
+            Log.i("TOUCHPIPE",
+                "DISP2A_post eid=" + __eid +
+                " now=" + __t1 +
+                " app_proc_ms=" + String.format(java.util.Locale.US, "%.3f", __appProcMs) +
+                " path=end");
+        }
+        // -----------------------------------------------------
 
         return result;
     }
