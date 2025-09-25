@@ -16578,8 +16578,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         final int __act = event.getActionMasked();
         final boolean __logThis = __isRoot && (__act == MotionEvent.ACTION_DOWN);
 
-        final long __eid = event.getEventTimeNano();    // 공통 이벤트 ID(ns)
-        final long __t0  = SystemClock.uptimeNanos();   // 앱(View 트리) 진입 시각
+        final long __eid = event.getEventTimeNano();    // Common event ID
+        final long __t0  = SystemClock.uptimeNanos();   // Entry timestamp into app View tree
 
         if (__logThis) {
             Log.i("TOUCHPIPE", "DISP2A_pre eid=" + __eid
